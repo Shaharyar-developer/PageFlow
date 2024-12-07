@@ -6,9 +6,11 @@ import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
 import "react-native-reanimated";
+import { Reader, ReaderProvider } from "@epubjs-react-native/core";
 
 import { useColorScheme } from "@/hooks/useColorScheme";
 import { PaperProvider, MD3DarkTheme, MD3LightTheme } from "react-native-paper";
+import { View } from "react-native";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -22,7 +24,15 @@ export default function RootLayout() {
   const theme = useMemo(
     () =>
       colorScheme === "dark"
-        ? { ...MD3DarkTheme, colors: baseTheme.theme.dark }
+        ? {
+            ...MD3DarkTheme,
+            colors: {
+              ...baseTheme.theme.dark,
+              background: "#000000",
+              tertiaryContainer: "#3f3f46",
+              onTertiaryContainer: "#ffffff",
+            },
+          }
         : { ...MD3LightTheme, colors: baseTheme.theme.light },
     [colorScheme, baseTheme.theme]
   );
@@ -39,11 +49,22 @@ export default function RootLayout() {
 
   return (
     <PaperProvider theme={theme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
-      </Stack>
-      <StatusBar style="auto" />
+      <ReaderProvider>
+        <Stack>
+          <Stack.Screen
+            name="(tabs)"
+            options={{
+              headerShown: false,
+              contentStyle: {
+                backgroundColor: theme.colors.background,
+                borderLeftWidth: 0,
+              },
+            }}
+          />
+          <Stack.Screen name="+not-found" />
+        </Stack>
+        <StatusBar style="auto" />
+      </ReaderProvider>
     </PaperProvider>
   );
 }

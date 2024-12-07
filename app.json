@@ -33,6 +33,12 @@
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
         }
+      ],
+      [
+        "expo-document-picker",
+        {
+          "iCloudContainerEnvironment": "Production"
+        }
       ]
     ],
     "experiments": {
@@ -43,7 +49,7 @@
         "origin": false
       },
       "eas": {
-        "projectId": "09904a83-d776-4253-b413-0ec9d4488866"
+        "projectId": "2177b1a9-00e8-429d-bc9a-abc530f613b0"
       }
     }
   }
